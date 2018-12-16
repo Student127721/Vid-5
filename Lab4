@@ -16,6 +16,8 @@ void RandPrintArr(int* arr, int height, int width);
 void PrintArr(int* arr, int height, int width);
 void PrintData(int* arr, int height, int width, int kolvo);
 
+//Hello
+
 int main()
 {
 
