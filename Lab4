@@ -1,0 +1,272 @@
+#include "pch.h" 
+#include <stdio.h> 
+#include <locale.h> 
+#include <conio.h> 
+#include <math.h> 
+#include <time.h> 
+#include <stdlib.h> 
+#define _CRTDBG_MAP_ALLOC 
+#include <crtdbg.h> 
+#include <windows.h>
+
+int PrintMenu();
+int Choice();
+void EnterData(int** arr, int* height, int* width, int* kolvo);
+void RandPrintArr(int* arr, int height, int width);
+void PrintArr(int* arr, int height, int width);
+void PrintData(int* arr, int height, int width, int kolvo);
+
+int main()
+{
+
+	
+		srand(time(NULL));
+		setlocale(LC_ALL, "RUS");
+		int* arr = NULL;
+		int kolvo = 0;
+		int bl = 0;
+		char c1 = '\0';
+		int height = 0;
+		int width = 0;
+		int i = 0;
+		int j = 0;
+		int menu = 0;
+		int choice = 0;
+		int povtor = 1;
+
+		while (povtor == 1)
+		{
+			menu = PrintMenu();
+
+			switch (menu)
+			{
+			case 1:
+				system("cls");
+				EnterData(&arr, &height, &width, &kolvo);
+				bl = 1;
+			case 2:
+				if (bl == 0)
+				{
+					printf("Сначала введите количество элементов ! \n");
+					break;
+				}
+
+				choice = Choice();
+
+				if (choice == 1)
+				{
+					PrintArr(arr, height, width);
+				}
+				else
+				{
+					RandPrintArr(arr, height, width);
+				}
+
+
+
+			case 3:
+
+				if (bl == 0)
+				{
+					printf("Сначала введите количество элементов ! \n");
+					break;
+				}
+
+				PrintData(arr, height, width, kolvo);
+
+				printf("Желаете повторить программу? Eсли Да введите-1 Если нет введите-2 \n");
+				while (scanf_s("%d", &povtor) != 1 || povtor <= 0 || povtor > 2)
+				{
+					while (scanf_s("%c", &c1 != 0 && c1 != '\n'));
+					printf("Введено не верное значение! Попробуйте снова!\n");
+				}
+
+				bl = 0;
+				system("cls");
+				break;
+			case 4:
+				return 0;
+
+			default:
+				printf("Введено не верное значение! Попробуйте снова!\n");
+				break;
+			}
+		}
+
+
+	delete[] arr;
+	_CrtDumpMemoryLeaks();
+	return 0;
+}
+
+int PrintMenu()
+{
+	char c = '\0';
+	int men = 0;
+	printf(" Меню \n 1-Ввести количетво элементов массива \n 2-Заполнить массив элементами \n 3-Определить количество самых успешных студентов\n 4-Выход \n");
+	while (scanf_s("%d", &men) != 1 || men <= 0 || men > 4)
+	{
+		while (scanf_s("%c", &c) != 0 && c != '\n');
+		printf("\n Введено не корректное значение! Выберете один из пунктов меню!\n");
+	}
+	return men;
+}
+
+void EnterData(int** arr, int* height, int* width, int* kolvo)
+{
+	char c = '\0';
+
+
+	delete[] * arr;
+
+	printf("введите количество студентов: ");
+	while (scanf_s("%d", height) != 1 || *height <= 0)
+	{
+		while (scanf_s("%c", &c) != 0 && c != '\n');
+		printf("\n Введено не верное значение! Попробуйте снова!\n");
+	}
+	printf("Вы ввели количество студентов равное : %d \n\n", *height);
+
+	printf("введите количество предметов: ");
+	while (scanf_s("%d", width) != 1 || *width <= 0)
+	{
+		while (scanf_s("%c", &c) != 0 && c != '\n');
+		printf("\n Введено не верное значение! Попробуйте снова!\n");
+	}
+	printf("Вы ввели количество предметов равное : %d \n\n", *width);
+
+	printf("введите количество самых успешных студентов: ");
+	while (scanf_s("%d", kolvo) != 1 || *kolvo <= 0)
+	{
+		while (scanf_s("%c", &c) != 0 && c != '\n');
+		printf("\n Введено не верное значение! Попробуйте снова!\n");
+	}
+	printf("Вы ввели количество самых успешных студентов равное : %d \n\n", *kolvo);
+
+	*arr = new int[*height * *width];
+
+}
+int Choice()
+{
+	int vvod = 0;
+	char c = '\0';
+	printf(" Если вы хотите ввести элементы самостоятельно введите 1 \n Если вы хотите заполнить массив случайными элементами введите 2 \n");
+	while (scanf_s("%d", &vvod) != 1 || vvod <= 0 || vvod > 2)
+	{
+		while (scanf_s("%c", &c) != 0 && c != '\n');
+		printf("Введено не верное значение! Попробуйте снова!\n");
+	}
+	return vvod;
+}
+void PrintArr(int* arr, int height, int width)
+{
+	int i = 0;
+	int j = 0;
+	char c = '\0';
+
+	printf("Вводите элементы массива:\n");
+	for (i = 0; i < height; i++)
+	{
+		for (j = 0; j < width; j++)
+
+		{
+			printf("a[%d][%d] = ", i + 1, j + 1);
+
+			while (scanf_s("%d", &arr[i * width + j]) != 1 || arr[i] < 2 || arr[i] > 5)
+			{
+				while (scanf_s("%c", &c) != 0 && c != '\n');
+				printf("\n Введено не верное значение! Попробуйте снова!\n");
+			}
+		}
+	}
+}
+
+void RandPrintArr(int* arr, int height, int width)
+{
+	int i = 0;
+	int j = 0;
+
+	printf("Элементы массива:\n");
+	for (i = 0; i < height; i++)
+	{
+		for (j = 0; j < width; j++)
+		{
+			arr[i * width + j] = rand() % 4 + 2;
+		}
+	}
+	for (i = 0; i < height; i++)
+	{
+		for (j = 0; j < width; j++)
+		{
+			printf("a[%d][%d] = %d ", i + 1, j + 1, arr[i * width + j]);
+		}
+		printf("\n");
+	}
+}
+
+void PrintData(int* arr, int height, int width, int kolvo)
+{
+	int srav = 0;
+	int sum = 0;
+	int k = 0;
+	int stop = 0;
+	int nom = 0;
+	int i = 0;
+	int j = 0;
+
+	printf("\nНомера самых успешных студентов : \n");
+
+	while (k < kolvo)
+	{
+		srav = 0;
+		sum = 0;
+		stop = true;
+		for (i = 0; i < height; i++)
+		{
+			sum = 0;
+			for (j = 0; j < width; j++)
+			{
+				sum = sum + arr[i * width + j];
+
+			}
+			if (sum > srav)
+			{
+				srav = sum;
+			}
+		}
+
+
+
+
+		for (i = 0; i < height; i++)
+		{
+
+
+			sum = 0;
+			for (j = 0; j < width; j++)
+			{
+				sum = sum + arr[i * width + j];
+
+			}
+
+			if (sum == srav)
+				if (stop == true)
+				{
+					{
+						for (j = 0; j < width; j++)
+						{
+							arr[i * width + j] = 0;
+						}
+						nom = i + 1;
+						stop = false;
+					}
+				}
+
+		}
+		printf("\n");
+
+		printf("No: %d\n", nom);
+		k = k + 1;
+
+	}
+}
